@@ -20,7 +20,6 @@ function App() {
 
     async function fetchImagesByQuery() {
       setIsLoading(true)
-      setIsError(true)
       try {
         const data = await requestImagesByQuery(query, page)
         if (data.length < 10) {
@@ -28,7 +27,9 @@ function App() {
         }
         setPictures((prevPictures) => [...prevPictures, ...data])
       } catch (error) {
-        setIsError(true)
+        setTimeout(() => {
+          setIsError(true)
+        }, 1000)
       } finally {
         setIsLoading(false)
       }
@@ -43,6 +44,7 @@ function App() {
   }
 
   const onSetSearchQuery = (searchTerm) => {
+    if (searchTerm === query) return
     setQuery(searchTerm)
     setPage(1)
     setHasMoreImages(true)
