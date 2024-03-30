@@ -1,8 +1,9 @@
+import css from '../ImageGallery/ImageGallery.module.css'
 import ImageCard from '../ImageCard/ImageCard'
 
 const ImageGallery = ({ images }) => {
   return (
-    <ul>
+    <ul className={css.imageGallery}>
       {Array.isArray(images) &&
         images.map((image) => {
           return (

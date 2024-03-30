@@ -1,13 +1,14 @@
+import css from '../ImageCard/ImageCard.module.css'
 const ImageCard = ({ id, small, alt_description, description, likes }) => {
   return (
-    <li key={id}>
-      <img src={small} alt={id} />
+    <li className={css.imageCard} key={id}>
+      <img className={css.imageCardImg} src={small} alt={id} />
       <br />
-      <h2>Title:{alt_description}</h2>
+      <h2 className={css.imageCardTitle}>Title: {alt_description}</h2>
       <br />
-      <h3>Description: {description}</h3>
+      <h3 className={css.imageCardDescription}>Description: {description}</h3>
       <br />
-      <h4>Likes: {likes}</h4>
+      <h4 className={css.imageCardLikes}>Likes: {likes}</h4>
     </li>
   )
 }

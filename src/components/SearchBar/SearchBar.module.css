@@ -1,0 +1,25 @@
+.searchForm {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.searchFormImput {
+  width: 300px;
+  height: 30px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  padding: 5px;
+  margin: 10px;
+}
+
+.searchFormButton {
+  width: 100px;
+  height: 30px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  padding: 5px;
+  margin: 10px;
+  background-color: #4caf50;
+  color: white;
+  cursor: pointer;
+}

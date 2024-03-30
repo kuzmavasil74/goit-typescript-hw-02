@@ -1,64 +1,66 @@
 import { useEffect, useState } from 'react'
-import './App.module.css'
+import css from './App.module.css'
 import Loader from './components/Loader/Loader'
 import ErrorMessage from './components/ErrorMessage/ErrorMessage'
-import { requestImages, requestImagesByQuery } from './services/api'
+import { requestImagesByQuery } from './services/api'
 import ImageGallery from './components/ImageGallery/ImageGallery'
 import SearchBar from './components/SearchBar/SearchBar'
 import LoadMoreBtn from './components/LoadMoreBtn/LoadMoreBtn'
 
 function App() {
-  const [images, setImages] = useState(null)
+  const [pictures, setPictures] = useState([])
   const [isLoading, setIsLoading] = useState(false)
   const [isError, setIsError] = useState(false)
   const [query, setQuery] = useState('')
   const [page, setPage] = useState(1)
-
-  useEffect(() => {
-    async function fetchImages() {
-      setIsLoading(true)
-      try {
-        const data = await requestImages()
-        setImages(data)
-      } catch (error) {
-        setIsError(true)
-      } finally {
-        setIsLoading(false)
-      }
-    }
-    fetchImages()
-  }, [])
+  const [hasMoreImages, setHasMoreImages] = useState(true)
 
   useEffect(() => {
     if (query.length === 0) return
 
     async function fetchImagesByQuery() {
       setIsLoading(true)
+      setIsError(true)
       try {
         const data = await requestImagesByQuery(query, page)
-        setImages((prevImages) => [...prevImages, ...data])
+        if (data.length < 10) {
+          setHasMoreImages(false)
+        }
+        setPictures((prevPictures) => [...prevPictures, ...data])
       } catch (error) {
         setIsError(true)
       } finally {
         setIsLoading(false)
       }
     }
+
     fetchImagesByQuery()
   }, [query, page])
 
+  const onSetPage = () => {
+    if (!hasMoreImages) return
+    setPage(page + 1)
+  }
+
   const onSetSearchQuery = (searchTerm) => {
     setQuery(searchTerm)
+    setPage(1)
+    setHasMoreImages(true)
+    setPictures([])
   }
-  const onSetPage = () => setPage(page + 1)
+
   return (
-    <>
-      <h1>Fetches images from the Unsplash API using Axios</h1>
+    <div className={css.appBgc}>
+      <h1></h1>
       <SearchBar onSetSearchQuery={onSetSearchQuery} />
       {isError && <ErrorMessage />}
       {isLoading && <Loader />}
-      {images && <ImageGallery images={images} />}
-      <LoadMoreBtn onSetPage={onSetPage} />
-    </>
+      <ImageGallery images={pictures} />
+      {hasMoreImages && pictures.length > 0 && (
+        <LoadMoreBtn onSetPage={onSetPage} />
+      )}
+      {pictures.length === 0 && query !== '' && <h1>No images found</h1>}
+    </div>
   )
 }
 
