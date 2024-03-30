@@ -9,9 +9,9 @@ const initialFormValue = {
   searchTerm: '',
 }
 
-const SearchBar = ({ onSetSerachQuery }) => {
+const SearchBar = ({ onSetSearchQuery }) => {
   const handleSubmit = (value) => {
-    onSetSerachQuery(value.searchTerm)
+    onSetSearchQuery(value.searchTerm)
   }
   return (
     <Formik
@@ -20,13 +20,14 @@ const SearchBar = ({ onSetSerachQuery }) => {
       onSubmit={handleSubmit}
     >
       <Form>
+        <h2>Search image by name</h2>
         <label>
           <Field
             type="text"
             name="searchTerm"
             placeholder="Search for an image"
           />
-          <ErrorMessage name="searchTerm" aria-label="Search" />
+          <ErrorMessage name="searchTerm" />
         </label>
         <button type="submit">Submit</button>
       </Form>
