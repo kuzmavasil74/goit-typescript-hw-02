@@ -1,10 +1,11 @@
 import css from '../ImageGallery/ImageGallery.module.css'
+
 import ImageCard from '../ImageCard/ImageCard'
 
-const ImageGallery = ({ images }) => {
+function ImageGallery({ images, openModal }) {
   return (
-    <ul className={css.imageGallery}>
-      {Array.isArray(images) &&
+    <div className={css.imageGallery}>
+      {Array.isArray(images) && images.length > 0 ? (
         images.map((image) => {
           return (
             <ImageCard
@@ -13,10 +14,14 @@ const ImageGallery = ({ images }) => {
               alt_description={image.alt_description}
               description={image.description}
               likes={image.likes}
+              onClick={() => openModal(image)}
             />
           )
-        })}
-    </ul>
+        })
+      ) : (
+        <p>No images to display</p>
+      )}
+    </div>
   )
 }
 

@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react'
+// App.jsx
+
 import css from './App.module.css'
 import Loader from './components/Loader/Loader'
 import ErrorMessage from './components/ErrorMessage/ErrorMessage'
@@ -6,7 +7,11 @@ import { requestImagesByQuery } from './services/api'
 import ImageGallery from './components/ImageGallery/ImageGallery'
 import SearchBar from './components/SearchBar/SearchBar'
 import LoadMoreBtn from './components/LoadMoreBtn/LoadMoreBtn'
+import ImageModal from './components/ImageModal/ImageModal'
+import { useEffect, useState } from 'react'
+import Modal from 'react-modal'
 
+Modal.setAppElement('#root')
 function App() {
   const [pictures, setPictures] = useState([])
   const [isLoading, setIsLoading] = useState(false)
@@ -14,6 +19,8 @@ function App() {
   const [query, setQuery] = useState('')
   const [page, setPage] = useState(1)
   const [hasMoreImages, setHasMoreImages] = useState(true)
+  const [selectedImage, setSelectedImage] = useState(null)
+  const [modalIsOpen, setModalIsOpen] = useState(false)
 
   useEffect(() => {
     if (query.length === 0) return
@@ -29,7 +36,7 @@ function App() {
       } catch (error) {
         setTimeout(() => {
           setIsError(true)
-        }, 1000)
+        }, 2000)
       } finally {
         setIsLoading(false)
       }
@@ -51,17 +58,27 @@ function App() {
     setPictures([])
   }
 
+  const openModal = (image) => {
+    setSelectedImage(image)
+    setModalIsOpen(true)
+  }
+
   return (
     <div className={css.appBgc}>
       <h1></h1>
       <SearchBar onSetSearchQuery={onSetSearchQuery} />
       {isError && <ErrorMessage />}
       {isLoading && <Loader />}
-      <ImageGallery images={pictures} />
+      <ImageGallery images={pictures} openModal={openModal} />
       {hasMoreImages && pictures.length > 0 && (
         <LoadMoreBtn onSetPage={onSetPage} />
       )}
       {pictures.length === 0 && query !== '' && <h1>No images found</h1>}
+      <ImageModal
+        isOpen={modalIsOpen}
+        onClose={() => setModalIsOpen(false)}
+        selectedImage={selectedImage}
+      />
     </div>
   )
 }

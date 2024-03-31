@@ -1,0 +1,45 @@
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(1, 1, 1, 0.7);
+  z-index: 999;
+}
+
+.modalCloseButton {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+}
+
+.modalCloseButtonIcon {
+  width: 40px;
+  height: 40px;
+  fill: #564f4f;
+}
+
+.modalCloseButton:hover {
+  opacity: 0.6;
+}
+
+.modalInfo {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+.alt_description {
+  margin: 10px;
+  font-family: monospace;
+}
+.imageCardLikes {
+  color: red;
+}
