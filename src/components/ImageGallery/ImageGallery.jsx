@@ -4,7 +4,7 @@ import ImageCard from '../ImageCard/ImageCard'
 
 function ImageGallery({ images, openModal }) {
   return (
-    <div className={css.imageGallery}>
+    <ul className={css.imageGallery}>
       {Array.isArray(images) && images.length > 0 ? (
         images.map((image) => {
           return (
@@ -21,7 +21,7 @@ function ImageGallery({ images, openModal }) {
       ) : (
         <p>No images to display</p>
       )}
-    </div>
+    </ul>
   )
 }
 

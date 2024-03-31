@@ -1,5 +1,3 @@
-// App.jsx
-
 import css from './App.module.css'
 import Loader from './components/Loader/Loader'
 import ErrorMessage from './components/ErrorMessage/ErrorMessage'
