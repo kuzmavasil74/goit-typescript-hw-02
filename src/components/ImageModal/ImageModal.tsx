@@ -1,8 +1,14 @@
+import React from 'react'
+import { IImageModalProps } from './ImageModal.types'
 import css from '../ImageModal/ImageModal.module.css'
 import Modal from 'react-modal'
 import closeIcon from '../ImageModal/close_icon.svg'
 
-const ImageModal = ({ isOpen, onClose, selectedImage }) => {
+const ImageModal: React.FC<IImageModalProps> = ({
+  isOpen,
+  onClose,
+  selectedImage,
+}) => {
   if (!selectedImage) return null
 
   const handleCloseModal = () => {
@@ -12,7 +18,7 @@ const ImageModal = ({ isOpen, onClose, selectedImage }) => {
   return (
     <Modal
       isOpen={isOpen}
-      onRequestClose={(handleCloseModal, onClose)}
+      onRequestClose={onClose}
       overlayClassName={css.modalOverlay}
       className={css.modal}
       ariaHideApp={true}

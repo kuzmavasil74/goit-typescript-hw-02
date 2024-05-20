@@ -1,6 +1,14 @@
+import React from 'react'
 import { ErrorMessage, Field, Form, Formik } from 'formik'
 import * as Yup from 'yup'
 import css from './SearchBar.module.css'
+
+interface ISearchBarProps {
+  onSetSearchQuery: (searchTerm: string) => void
+}
+interface IFormValues {
+  searchTerm: string
+}
 
 const searchFormSchema = Yup.object().shape({
   searchTerm: Yup.string().required('Please enter a search term'),
@@ -10,8 +18,8 @@ const initialFormValue = {
   searchTerm: '',
 }
 
-const SearchBar = ({ onSetSearchQuery }) => {
-  const handleSubmit = (value) => {
+const SearchBar: React.FC<ISearchBarProps> = ({ onSetSearchQuery }) => {
+  const handleSubmit = (value: IFormValues) => {
     onSetSearchQuery(value.searchTerm)
   }
   return (

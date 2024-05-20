@@ -1,8 +1,14 @@
 // ImageCard.jsx
-
+import React from 'react'
 import css from '../ImageCard/ImageCard.module.css'
-
-function ImageCard({ small, alt_description, description, likes, onClick }) {
+import { IImageCardProps } from './ImageCard.types'
+const ImageCard: React.FC<IImageCardProps> = ({
+  small,
+  alt_description,
+  description,
+  likes,
+  onClick,
+}) => {
   return (
     <li className={css.imageCard} onClick={onClick}>
       <img className={css.imageCardImg} src={small} alt={alt_description} />

@@ -1,7 +1,9 @@
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import { requestImagesByQuery, IImage } from './services/api'
 import css from './App.module.css'
 import Loader from './components/Loader/Loader'
 import ErrorMessage from './components/ErrorMessage/ErrorMessage'
-import { requestImagesByQuery } from './services/api'
 import ImageGallery from './components/ImageGallery/ImageGallery'
 import SearchBar from './components/SearchBar/SearchBar'
 import LoadMoreBtn from './components/LoadMoreBtn/LoadMoreBtn'
@@ -11,14 +13,14 @@ import Modal from 'react-modal'
 
 Modal.setAppElement('#root')
 function App() {
-  const [pictures, setPictures] = useState([])
-  const [isLoading, setIsLoading] = useState(false)
-  const [isError, setIsError] = useState(false)
-  const [query, setQuery] = useState('')
-  const [page, setPage] = useState(1)
-  const [hasMoreImages, setHasMoreImages] = useState(true)
-  const [selectedImage, setSelectedImage] = useState(null)
-  const [modalIsOpen, setModalIsOpen] = useState(false)
+  const [pictures, setPictures] = useState<IImage[]>([])
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [isError, setIsError] = useState<boolean | null>(false)
+  const [query, setQuery] = useState<string>('')
+  const [page, setPage] = useState<number>(1)
+  const [hasMoreImages, setHasMoreImages] = useState<boolean>(true)
+  const [selectedImage, setSelectedImage] = useState<IImage | null>(null)
+  const [modalIsOpen, setModalIsOpen] = useState<boolean>(false)
 
   useEffect(() => {
     if (query.length === 0) return
@@ -48,7 +50,7 @@ function App() {
     setPage(page + 1)
   }
 
-  const onSetSearchQuery = (searchTerm) => {
+  const onSetSearchQuery = (searchTerm: string) => {
     if (searchTerm === query) return
     setQuery(searchTerm)
     setPage(1)
@@ -56,7 +58,7 @@ function App() {
     setPictures([])
   }
 
-  const openModal = (image) => {
+  const openModal = (image: IImage) => {
     setSelectedImage(image)
     setModalIsOpen(true)
   }
@@ -69,7 +71,7 @@ function App() {
       {isLoading && <Loader />}
       <ImageGallery images={pictures} openModal={openModal} />
       {hasMoreImages && pictures.length > 0 && (
-        <LoadMoreBtn onSetPage={onSetPage} />
+        <LoadMoreBtn onSetPage={onSetPage} disable={!hasMoreImages} />
       )}
       {pictures.length === 0 && query !== '' && <h1>No images found</h1>}
       <ImageModal
